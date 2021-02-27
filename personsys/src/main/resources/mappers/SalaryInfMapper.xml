@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.own.mapper.SalaryInfMapper">
+  <resultMap id="BaseResultMap" type="com.own.bean.SalaryInf">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="DEPT_ID" jdbcType="INTEGER" property="deptId" />
+    <result column="JOB_ID" jdbcType="INTEGER" property="jobId" />
+    <result column="EMP_ID" jdbcType="INTEGER" property="empId" />
+    <result column="SALARY_STATION" jdbcType="INTEGER" property="salaryStation" />
+    <result column="SALARY_LEVEL" jdbcType="INTEGER" property="salaryLevel" />
+    <result column="SENIORITY_PAY" jdbcType="INTEGER" property="seniorityPay" />
+    <result column="PERFORMANCE" jdbcType="INTEGER" property="performance" />
+    <result column="INDIVIDUAL_INCOME" jdbcType="REAL" property="individualIncome" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <association property="employeeInf" column="EMP_ID" select="com.own.mapper.EmployeeInfMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, DEPT_ID, JOB_ID, EMP_ID, SALARY_STATION, SALARY_LEVEL, SENIORITY_PAY, PERFORMANCE, 
+    INDIVIDUAL_INCOME, CREATE_DATE
+  </sql>
+  <select id="selectByExample" parameterType="com.own.bean.SalaryInfExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from salary_inf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from salary_inf
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from salary_inf
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.own.bean.SalaryInfExample">
+    delete from salary_inf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.own.bean.SalaryInf">
+    insert into salary_inf (ID, DEPT_ID, JOB_ID, 
+      EMP_ID, SALARY_STATION, SALARY_LEVEL, 
+      SENIORITY_PAY, PERFORMANCE, INDIVIDUAL_INCOME, 
+      CREATE_DATE)
+    values (#{id,jdbcType=INTEGER}, #{deptId,jdbcType=INTEGER}, #{jobId,jdbcType=INTEGER}, 
+      #{empId,jdbcType=INTEGER}, #{salaryStation,jdbcType=INTEGER}, #{salaryLevel,jdbcType=INTEGER}, 
+      #{seniorityPay,jdbcType=INTEGER}, #{performance,jdbcType=INTEGER}, #{individualIncome,jdbcType=REAL}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.own.bean.SalaryInf">
+    insert into salary_inf
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="deptId != null">
+        DEPT_ID,
+      </if>
+      <if test="jobId != null">
+        JOB_ID,
+      </if>
+      <if test="empId != null">
+        EMP_ID,
+      </if>
+      <if test="salaryStation != null">
+        SALARY_STATION,
+      </if>
+      <if test="salaryLevel != null">
+        SALARY_LEVEL,
+      </if>
+      <if test="seniorityPay != null">
+        SENIORITY_PAY,
+      </if>
+      <if test="performance != null">
+        PERFORMANCE,
+      </if>
+      <if test="individualIncome != null">
+        INDIVIDUAL_INCOME,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deptId != null">
+        #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="jobId != null">
+        #{jobId,jdbcType=INTEGER},
+      </if>
+      <if test="empId != null">
+        #{empId,jdbcType=INTEGER},
+      </if>
+      <if test="salaryStation != null">
+        #{salaryStation,jdbcType=INTEGER},
+      </if>
+      <if test="salaryLevel != null">
+        #{salaryLevel,jdbcType=INTEGER},
+      </if>
+      <if test="seniorityPay != null">
+        #{seniorityPay,jdbcType=INTEGER},
+      </if>
+      <if test="performance != null">
+        #{performance,jdbcType=INTEGER},
+      </if>
+      <if test="individualIncome != null">
+        #{individualIncome,jdbcType=REAL},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.own.bean.SalaryInfExample" resultType="java.lang.Long">
+    select count(*) from salary_inf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+      select * from salary_inf
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+    update salary_inf
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.deptId != null">
+        DEPT_ID = #{record.deptId,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobId != null">
+        JOB_ID = #{record.jobId,jdbcType=INTEGER},
+      </if>
+      <if test="record.empId != null">
+        EMP_ID = #{record.empId,jdbcType=INTEGER},
+      </if>
+      <if test="record.salaryStation != null">
+        SALARY_STATION = #{record.salaryStation,jdbcType=INTEGER},
+      </if>
+      <if test="record.salaryLevel != null">
+        SALARY_LEVEL = #{record.salaryLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.seniorityPay != null">
+        SENIORITY_PAY = #{record.seniorityPay,jdbcType=INTEGER},
+      </if>
+      <if test="record.performance != null">
+        PERFORMANCE = #{record.performance,jdbcType=INTEGER},
+      </if>
+      <if test="record.individualIncome != null">
+        INDIVIDUAL_INCOME = #{record.individualIncome,jdbcType=REAL},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update salary_inf
+    set ID = #{record.id,jdbcType=INTEGER},
+      DEPT_ID = #{record.deptId,jdbcType=INTEGER},
+      JOB_ID = #{record.jobId,jdbcType=INTEGER},
+      EMP_ID = #{record.empId,jdbcType=INTEGER},
+      SALARY_STATION = #{record.salaryStation,jdbcType=INTEGER},
+      SALARY_LEVEL = #{record.salaryLevel,jdbcType=INTEGER},
+      SENIORITY_PAY = #{record.seniorityPay,jdbcType=INTEGER},
+      PERFORMANCE = #{record.performance,jdbcType=INTEGER},
+      INDIVIDUAL_INCOME = #{record.individualIncome,jdbcType=REAL},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.own.bean.SalaryInf">
+    update salary_inf
+    <set>
+      <if test="deptId != null">
+        DEPT_ID = #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="jobId != null">
+        JOB_ID = #{jobId,jdbcType=INTEGER},
+      </if>
+      <if test="empId != null">
+        EMP_ID = #{empId,jdbcType=INTEGER},
+      </if>
+      <if test="salaryStation != null">
+        SALARY_STATION = #{salaryStation,jdbcType=INTEGER},
+      </if>
+      <if test="salaryLevel != null">
+        SALARY_LEVEL = #{salaryLevel,jdbcType=INTEGER},
+      </if>
+      <if test="seniorityPay != null">
+        SENIORITY_PAY = #{seniorityPay,jdbcType=INTEGER},
+      </if>
+      <if test="performance != null">
+        PERFORMANCE = #{performance,jdbcType=INTEGER},
+      </if>
+      <if test="individualIncome != null">
+        INDIVIDUAL_INCOME = #{individualIncome,jdbcType=REAL},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.own.bean.SalaryInf">
+    update salary_inf
+    set DEPT_ID = #{deptId,jdbcType=INTEGER},
+      JOB_ID = #{jobId,jdbcType=INTEGER},
+      EMP_ID = #{empId,jdbcType=INTEGER},
+      SALARY_STATION = #{salaryStation,jdbcType=INTEGER},
+      SALARY_LEVEL = #{salaryLevel,jdbcType=INTEGER},
+      SENIORITY_PAY = #{seniorityPay,jdbcType=INTEGER},
+      PERFORMANCE = #{performance,jdbcType=INTEGER},
+      INDIVIDUAL_INCOME = #{individualIncome,jdbcType=REAL},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

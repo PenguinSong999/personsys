@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.own.mapper.ResumeInfMapper">
+  <resultMap id="BaseResultMap" type="com.own.bean.ResumeInf">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="jobtype" jdbcType="VARCHAR" property="jobtype" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="sex_id" jdbcType="INTEGER" property="sexId" />
+    <result column="education_id" jdbcType="INTEGER" property="educationId" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="status_id" jdbcType="INTEGER" property="statusId" />
+    <result column="filename" jdbcType="VARCHAR" property="filename" />
+    <result column="createdate" jdbcType="TIMESTAMP" property="createdate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, jobtype, content, name, email, sex_id, education_id, phone, status_id, filename, 
+    createdate
+  </sql>
+  <select id="selectByExample" parameterType="com.own.bean.ResumeInfExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from resume_inf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from resume_inf
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from resume_inf
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.own.bean.ResumeInfExample">
+    delete from resume_inf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.own.bean.ResumeInf">
+    insert into resume_inf (id, jobtype, content, 
+      name, email, sex_id, 
+      education_id, phone, status_id, 
+      filename, createdate)
+    values (#{id,jdbcType=INTEGER}, #{jobtype,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{sexId,jdbcType=INTEGER}, 
+      #{educationId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{statusId,jdbcType=INTEGER}, 
+      #{filename,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.own.bean.ResumeInf">
+    insert into resume_inf
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="jobtype != null">
+        jobtype,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="sexId != null">
+        sex_id,
+      </if>
+      <if test="educationId != null">
+        education_id,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="statusId != null">
+        status_id,
+      </if>
+      <if test="filename != null">
+        filename,
+      </if>
+      <if test="createdate != null">
+        createdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="jobtype != null">
+        #{jobtype,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="sexId != null">
+        #{sexId,jdbcType=INTEGER},
+      </if>
+      <if test="educationId != null">
+        #{educationId,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="statusId != null">
+        #{statusId,jdbcType=INTEGER},
+      </if>
+      <if test="filename != null">
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.own.bean.ResumeInfExample" resultType="java.lang.Long">
+    select count(*) from resume_inf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update resume_inf
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobtype != null">
+        jobtype = #{record.jobtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sexId != null">
+        sex_id = #{record.sexId,jdbcType=INTEGER},
+      </if>
+      <if test="record.educationId != null">
+        education_id = #{record.educationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusId != null">
+        status_id = #{record.statusId,jdbcType=INTEGER},
+      </if>
+      <if test="record.filename != null">
+        filename = #{record.filename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdate != null">
+        createdate = #{record.createdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update resume_inf
+    set id = #{record.id,jdbcType=INTEGER},
+      jobtype = #{record.jobtype,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      sex_id = #{record.sexId,jdbcType=INTEGER},
+      education_id = #{record.educationId,jdbcType=INTEGER},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      status_id = #{record.statusId,jdbcType=INTEGER},
+      filename = #{record.filename,jdbcType=VARCHAR},
+      createdate = #{record.createdate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.own.bean.ResumeInf">
+    update resume_inf
+    <set>
+      <if test="jobtype != null">
+        jobtype = #{jobtype,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="sexId != null">
+        sex_id = #{sexId,jdbcType=INTEGER},
+      </if>
+      <if test="educationId != null">
+        education_id = #{educationId,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="statusId != null">
+        status_id = #{statusId,jdbcType=INTEGER},
+      </if>
+      <if test="filename != null">
+        filename = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.own.bean.ResumeInf">
+    update resume_inf
+    set jobtype = #{jobtype,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      sex_id = #{sexId,jdbcType=INTEGER},
+      education_id = #{educationId,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      status_id = #{statusId,jdbcType=INTEGER},
+      filename = #{filename,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

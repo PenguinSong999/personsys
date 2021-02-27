@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.own.mapper.ContractInfMapper">
+  <resultMap id="BaseResultMap" type="com.own.bean.ContractInf">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="DEPT_ID" jdbcType="INTEGER" property="deptId" />
+    <result column="JOB_ID" jdbcType="INTEGER" property="jobId" />
+    <result column="STATUS_ID" jdbcType="INTEGER" property="statusId" />
+    <result column="EMP_ID" jdbcType="INTEGER" property="empId" />
+    <result column="TRAINCONTRACT_ID" jdbcType="INTEGER" property="traincontractId" />
+    <result column="LABORCONTRACT_ID" jdbcType="INTEGER" property="laborcontractId" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="CONFIDENTIALITYCONTRACT_ID" jdbcType="INTEGER" property="confidentialitycontractId" />
+    <association property="employeeInf" column="EMP_ID" select="com.own.mapper.EmployeeInfMapper.selectByPrimaryKey"/>
+    <association property="laborcontractInf" column="LABORCONTRACT_ID" select="com.own.mapper.LaborcontractInfMapper.selectByPrimaryKey"/>
+    <association property="traincontractInf" column="TRAINCONTRACT_ID" select="com.own.mapper.TraincontractInfMapper.selectByPrimaryKey"/>
+    <association property="confidentialitycontractInf" column="CONFIDENTIALITYCONTRACT_ID" select="com.own.mapper.ConfidentialitycontractInfMapper.selectByPrimaryKey"/>
+    <association property="statusInf" column="STATUS_ID" select="com.own.mapper.StatusInfMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, DEPT_ID, JOB_ID, STATUS_ID, EMP_ID, TRAINCONTRACT_ID, LABORCONTRACT_ID, CREATE_DATE, 
+    CONFIDENTIALITYCONTRACT_ID
+  </sql>
+  <select id="selectByExample" parameterType="com.own.bean.ContractInfExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from contract_inf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from contract_inf
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from contract_inf
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.own.bean.ContractInfExample">
+    delete from contract_inf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.own.bean.ContractInf">
+    insert into contract_inf (ID, DEPT_ID, JOB_ID, 
+      STATUS_ID, EMP_ID, TRAINCONTRACT_ID, 
+      LABORCONTRACT_ID, CREATE_DATE, CONFIDENTIALITYCONTRACT_ID
+      )
+    values (#{id,jdbcType=INTEGER}, #{deptId,jdbcType=INTEGER}, #{jobId,jdbcType=INTEGER}, 
+      #{statusId,jdbcType=INTEGER}, #{empId,jdbcType=INTEGER}, #{traincontractId,jdbcType=INTEGER}, 
+      #{laborcontractId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{confidentialitycontractId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.own.bean.ContractInf">
+    insert into contract_inf
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="deptId != null">
+        DEPT_ID,
+      </if>
+      <if test="jobId != null">
+        JOB_ID,
+      </if>
+      <if test="statusId != null">
+        STATUS_ID,
+      </if>
+      <if test="empId != null">
+        EMP_ID,
+      </if>
+      <if test="traincontractId != null">
+        TRAINCONTRACT_ID,
+      </if>
+      <if test="laborcontractId != null">
+        LABORCONTRACT_ID,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="confidentialitycontractId != null">
+        CONFIDENTIALITYCONTRACT_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deptId != null">
+        #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="jobId != null">
+        #{jobId,jdbcType=INTEGER},
+      </if>
+      <if test="statusId != null">
+        #{statusId,jdbcType=INTEGER},
+      </if>
+      <if test="empId != null">
+        #{empId,jdbcType=INTEGER},
+      </if>
+      <if test="traincontractId != null">
+        #{traincontractId,jdbcType=INTEGER},
+      </if>
+      <if test="laborcontractId != null">
+        #{laborcontractId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confidentialitycontractId != null">
+        #{confidentialitycontractId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.own.bean.ContractInfExample" resultType="java.lang.Long">
+    select count(*) from contract_inf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+      select * from contract_inf
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+    update contract_inf
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.deptId != null">
+        DEPT_ID = #{record.deptId,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobId != null">
+        JOB_ID = #{record.jobId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusId != null">
+        STATUS_ID = #{record.statusId,jdbcType=INTEGER},
+      </if>
+      <if test="record.empId != null">
+        EMP_ID = #{record.empId,jdbcType=INTEGER},
+      </if>
+      <if test="record.traincontractId != null">
+        TRAINCONTRACT_ID = #{record.traincontractId,jdbcType=INTEGER},
+      </if>
+      <if test="record.laborcontractId != null">
+        LABORCONTRACT_ID = #{record.laborcontractId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.confidentialitycontractId != null">
+        CONFIDENTIALITYCONTRACT_ID = #{record.confidentialitycontractId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update contract_inf
+    set ID = #{record.id,jdbcType=INTEGER},
+      DEPT_ID = #{record.deptId,jdbcType=INTEGER},
+      JOB_ID = #{record.jobId,jdbcType=INTEGER},
+      STATUS_ID = #{record.statusId,jdbcType=INTEGER},
+      EMP_ID = #{record.empId,jdbcType=INTEGER},
+      TRAINCONTRACT_ID = #{record.traincontractId,jdbcType=INTEGER},
+      LABORCONTRACT_ID = #{record.laborcontractId,jdbcType=INTEGER},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      CONFIDENTIALITYCONTRACT_ID = #{record.confidentialitycontractId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.own.bean.ContractInf">
+    update contract_inf
+    <set>
+      <if test="deptId != null">
+        DEPT_ID = #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="jobId != null">
+        JOB_ID = #{jobId,jdbcType=INTEGER},
+      </if>
+      <if test="statusId != null">
+        STATUS_ID = #{statusId,jdbcType=INTEGER},
+      </if>
+      <if test="empId != null">
+        EMP_ID = #{empId,jdbcType=INTEGER},
+      </if>
+      <if test="traincontractId != null">
+        TRAINCONTRACT_ID = #{traincontractId,jdbcType=INTEGER},
+      </if>
+      <if test="laborcontractId != null">
+        LABORCONTRACT_ID = #{laborcontractId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confidentialitycontractId != null">
+        CONFIDENTIALITYCONTRACT_ID = #{confidentialitycontractId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.own.bean.ContractInf">
+    update contract_inf
+    set DEPT_ID = #{deptId,jdbcType=INTEGER},
+      JOB_ID = #{jobId,jdbcType=INTEGER},
+      STATUS_ID = #{statusId,jdbcType=INTEGER},
+      EMP_ID = #{empId,jdbcType=INTEGER},
+      TRAINCONTRACT_ID = #{traincontractId,jdbcType=INTEGER},
+      LABORCONTRACT_ID = #{laborcontractId,jdbcType=INTEGER},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      CONFIDENTIALITYCONTRACT_ID = #{confidentialitycontractId,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

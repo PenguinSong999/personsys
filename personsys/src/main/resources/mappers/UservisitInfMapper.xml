@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.own.mapper.UservisitInfMapper">
+  <resultMap id="BaseResultMap" type="com.own.bean.UservisitInf">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="login_time" jdbcType="VARCHAR" property="loginTime" />
+    <result column="exit_time" jdbcType="VARCHAR" property="exitTime" />
+    <result column="visit_ip" jdbcType="VARCHAR" property="visitIp" />
+    <result column="user_address" jdbcType="VARCHAR" property="userAddress" />
+    <result column="user_from" jdbcType="VARCHAR" property="userFrom" />
+    <result column="browser" jdbcType="VARCHAR" property="browser" />
+    <result column="system" jdbcType="VARCHAR" property="system" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="loginname" jdbcType="VARCHAR" property="loginname" />
+    <result column="iphone" jdbcType="VARCHAR" property="iphone" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, login_time, exit_time, visit_ip, user_address, user_from, browser, system, version, 
+    loginname, iphone
+  </sql>
+  <select id="selectByExample" parameterType="com.own.bean.UservisitInfExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from uservisit_inf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from uservisit_inf
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from uservisit_inf
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.own.bean.UservisitInfExample">
+    delete from uservisit_inf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.own.bean.UservisitInf">
+    insert into uservisit_inf (id, login_time, exit_time, 
+      visit_ip, user_address, user_from, 
+      browser, system, version, 
+      loginname, iphone)
+    values (#{id,jdbcType=INTEGER}, #{loginTime,jdbcType=VARCHAR}, #{exitTime,jdbcType=VARCHAR}, 
+      #{visitIp,jdbcType=VARCHAR}, #{userAddress,jdbcType=VARCHAR}, #{userFrom,jdbcType=VARCHAR}, 
+      #{browser,jdbcType=VARCHAR}, #{system,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
+      #{loginname,jdbcType=VARCHAR}, #{iphone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.own.bean.UservisitInf">
+    insert into uservisit_inf
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="loginTime != null">
+        login_time,
+      </if>
+      <if test="exitTime != null">
+        exit_time,
+      </if>
+      <if test="visitIp != null">
+        visit_ip,
+      </if>
+      <if test="userAddress != null">
+        user_address,
+      </if>
+      <if test="userFrom != null">
+        user_from,
+      </if>
+      <if test="browser != null">
+        browser,
+      </if>
+      <if test="system != null">
+        system,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="loginname != null">
+        loginname,
+      </if>
+      <if test="iphone != null">
+        iphone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="loginTime != null">
+        #{loginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="exitTime != null">
+        #{exitTime,jdbcType=VARCHAR},
+      </if>
+      <if test="visitIp != null">
+        #{visitIp,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddress != null">
+        #{userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userFrom != null">
+        #{userFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null">
+        #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="system != null">
+        #{system,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null">
+        #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="iphone != null">
+        #{iphone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.own.bean.UservisitInfExample" resultType="java.lang.Long">
+    select count(*) from uservisit_inf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+    <select id="selectAll" resultType="com.own.bean.UservisitInf">
+      select * from uservisit_inf
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+    update uservisit_inf
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginTime != null">
+        login_time = #{record.loginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exitTime != null">
+        exit_time = #{record.exitTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visitIp != null">
+        visit_ip = #{record.visitIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userAddress != null">
+        user_address = #{record.userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userFrom != null">
+        user_from = #{record.userFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.browser != null">
+        browser = #{record.browser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.system != null">
+        system = #{record.system,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginname != null">
+        loginname = #{record.loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iphone != null">
+        iphone = #{record.iphone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update uservisit_inf
+    set id = #{record.id,jdbcType=INTEGER},
+      login_time = #{record.loginTime,jdbcType=VARCHAR},
+      exit_time = #{record.exitTime,jdbcType=VARCHAR},
+      visit_ip = #{record.visitIp,jdbcType=VARCHAR},
+      user_address = #{record.userAddress,jdbcType=VARCHAR},
+      user_from = #{record.userFrom,jdbcType=VARCHAR},
+      browser = #{record.browser,jdbcType=VARCHAR},
+      system = #{record.system,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=VARCHAR},
+      loginname = #{record.loginname,jdbcType=VARCHAR},
+      iphone = #{record.iphone,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.own.bean.UservisitInf">
+    update uservisit_inf
+    <set>
+      <if test="loginTime != null">
+        login_time = #{loginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="exitTime != null">
+        exit_time = #{exitTime,jdbcType=VARCHAR},
+      </if>
+      <if test="visitIp != null">
+        visit_ip = #{visitIp,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddress != null">
+        user_address = #{userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userFrom != null">
+        user_from = #{userFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null">
+        browser = #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="system != null">
+        system = #{system,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null">
+        loginname = #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="iphone != null">
+        iphone = #{iphone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.own.bean.UservisitInf">
+    update uservisit_inf
+    set login_time = #{loginTime,jdbcType=VARCHAR},
+      exit_time = #{exitTime,jdbcType=VARCHAR},
+      visit_ip = #{visitIp,jdbcType=VARCHAR},
+      user_address = #{userAddress,jdbcType=VARCHAR},
+      user_from = #{userFrom,jdbcType=VARCHAR},
+      browser = #{browser,jdbcType=VARCHAR},
+      system = #{system,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      loginname = #{loginname,jdbcType=VARCHAR},
+      iphone = #{iphone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
